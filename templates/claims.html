@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}Claims{% endblock %}{% block page_heading %}Claims{% endblock %}
+{% block content %}<div class="page-head"><div><h1>Claims management</h1><p>Review claim outcomes, rejection reasons and settlement payouts.</p></div><a class="btn primary" href="{{ url_for('new_claim') }}">＋ Process claim</a></div>
+<section class="panel"><div class="table-wrap"><table><thead><tr><th>Claim ID</th><th>Policy</th><th>Date</th><th>Fault</th><th>Repair estimate</th><th>Decision</th><th>Reason</th><th>Deductible</th><th>Payout</th></tr></thead><tbody>
+{% for c in claims %}<tr><td class="mono">{{ c.claim_id }}</td><td>{{ c.policy_id }}</td><td>{{ c.claim_date }}</td><td>{{ c.fault_type }}</td><td>₹{{ c.repair_estimate }}</td><td><span class="pill {{ c.decision|lower }}">{{ c.decision }}</span></td><td>{{ c.reason or '—' }}</td><td>₹{{ c.deductible }}</td><td>₹{{ c.payout }}</td></tr>{% else %}<tr><td colspan="9" class="empty">No claims available.</td></tr>{% endfor %}
+</tbody></table></div><div class="table-foot">{{ claims|length }} claim records</div></section>{% endblock %}

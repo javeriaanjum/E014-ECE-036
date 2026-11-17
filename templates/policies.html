@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Policies{% endblock %}{% block page_heading %}Policies{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>Policy register</h1><p>Browse and search warranty policies calculated by the Python engine.</p></div><a class="btn primary" href="{{ url_for('new_policy') }}">＋ Add policy</a></div>
+<form class="filter-bar" method="get"><input name="q" value="{{ q }}" placeholder="Search policy, customer or category…"><select name="status"><option value="">All statuses</option>{% for s in ['ACTIVE','CANCELLED','CLOSED','EXPIRED','NOT_SOLD'] %}<option value="{{ s }}" {{ 'selected' if status == s else '' }}>{{ s }}</option>{% endfor %}</select><button class="btn secondary">Filter</button><a class="btn ghost" href="{{ url_for('policies') }}">Clear</a></form>
+<section class="panel"><div class="table-wrap"><table><thead><tr><th>Policy ID</th><th>Customer</th><th>Product</th><th>Product price</th><th>Plan</th><th>Premium</th><th>Coverage</th><th>Status</th></tr></thead><tbody>
+{% for p in policies %}<tr><td class="mono">{{ p.policy_id }}</td><td>{{ p.customer_id }}</td><td>{{ p.category }}</td><td>₹{{ p.product_price }}</td><td>{{ p.plan_years }} yr</td><td>{% if p.premium_total %}₹{{ p.premium_total }}{% else %}—{% endif %}</td><td class="date-cell">{{ p.coverage_start or '—' }}<br>to {{ p.coverage_end or '—' }}</td><td><span class="pill {{ p.status|lower }}">{{ p.status }}</span></td></tr>
+{% else %}<tr><td colspan="8" class="empty">No policies match your search.</td></tr>{% endfor %}
+</tbody></table></div><div class="table-foot">Showing {{ policies|length }} policies</div></section>
+{% endblock %}

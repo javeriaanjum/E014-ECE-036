@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block title %}New cancellation{% endblock %}{% block page_heading %}New cancellation{% endblock %}
+{% block content %}<div class="page-head"><div><h1>Process cancellation</h1><p>Refund is calculated using remaining complete months and the engine's 10% admin charge rule.</p></div><a class="btn ghost" href="{{ url_for('cancellations') }}">← Back</a></div>
+<form class="panel form-panel" method="post"><div class="form-grid">
+<label>Cancellation ID<input name="cancel_id" placeholder="CAN-021" required></label>
+<label>Policy<select name="policy_id" required><option value="">Select policy</option>{% for p in policies %}<option value="{{ p.policy_id }}">{{ p.policy_id }} · {{ p.customer_id }}</option>{% endfor %}</select></label>
+<label>Cancellation date<input name="cancel_date" type="date" value="{{ today }}" required></label>
+</div><div class="form-note">The original engine denies a refund if an admitted claim exists, and records the policy as cancelled.</div><div class="form-actions"><button class="btn primary">Calculate refund</button><a class="btn ghost" href="{{ url_for('cancellations') }}">Cancel</a></div></form>{% endblock %}

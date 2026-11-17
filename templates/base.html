@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Warranty Desk{% endblock %} | ECE-036</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="{{ url_for('dashboard') }}">
+        <span class="brand-mark">W</span>
+        <span><strong>Warranty<span class="brand-light">Desk</span></strong><small>ECE-036 MANAGEMENT</small></span>
+      </a>
+      <div class="nav-label">WORKSPACE</div>
+      <nav class="nav">
+        <a href="{{ url_for('dashboard') }}" class="{{ 'active' if request.endpoint == 'dashboard' else '' }}"><span>▦</span> Overview</a>
+        <a href="{{ url_for('policies') }}" class="{{ 'active' if request.endpoint in ['policies','new_policy'] else '' }}"><span>▤</span> Policies</a>
+        <a href="{{ url_for('claims') }}" class="{{ 'active' if request.endpoint in ['claims','new_claim'] else '' }}"><span>◇</span> Claims</a>
+        <a href="{{ url_for('cancellations') }}" class="{{ 'active' if request.endpoint in ['cancellations','new_cancellation'] else '' }}"><span>↶</span> Cancellations</a>
+        <a href="{{ url_for('customers') }}" class="{{ 'active' if request.endpoint == 'customers' else '' }}"><span>♙</span> Customers</a>
+        <a href="{{ url_for('reports') }}" class="{{ 'active' if request.endpoint == 'reports' else '' }}"><span>▧</span> Reports</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="side-note"><span class="live-dot"></span><div><b>Engine connected</b><small>Python rules active</small></div></div>
+        <small class="version">ECE-036 · Local demo</small>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation">☰</button>
+        <div><span class="eyebrow">EXTENDED WARRANTY PLATFORM</span><div class="top-title">{% block page_heading %}Overview{% endblock %}</div></div>
+        <div class="top-right"><span class="date-chip">● &nbsp; System online</span><span class="avatar">AD</span></div>
+      </header>
+      <section class="content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}{% for category, message in messages %}
+            <div class="alert {{ category }}">{{ message }}<button class="alert-close" onclick="this.parentElement.remove()">×</button></div>
+          {% endfor %}{% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+      </section>
+      <footer class="footer">ECE-036 Warranty Engine <span>Built with Flask · Existing Python engine retained</span></footer>
+    </main>
+  </div>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

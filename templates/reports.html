@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block title %}Reports{% endblock %}{% block page_heading %}Reports{% endblock %}
+{% block content %}<div class="page-head"><div><h1>Reports & exports</h1><p>Download CSV outputs generated from the live engine state in this app session.</p></div></div>
+<div class="report-grid">{% for title, filename, count in files %}<article class="panel report-card"><div class="report-icon">▧</div><div><h2>{{ title }}</h2><p>{{ count }} records · CSV format</p></div><a class="btn secondary" href="{{ url_for('download_report', filename=filename) }}">↓ Download CSV</a></article>{% endfor %}</div>
+<div class="form-note">Note: records entered through the web interface are held in memory while the Flask server is running. Download reports before stopping the server if you need to keep newly entered demo records.</div>{% endblock %}

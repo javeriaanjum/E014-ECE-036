@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}Cancellations{% endblock %}{% block page_heading %}Cancellations{% endblock %}
+{% block content %}<div class="page-head"><div><h1>Cancellation & refunds</h1><p>Review refund calculations and cancellation decisions.</p></div><a class="btn primary" href="{{ url_for('new_cancellation') }}">＋ New cancellation</a></div>
+<section class="panel"><div class="table-wrap"><table><thead><tr><th>Cancellation ID</th><th>Policy</th><th>Date</th><th>Total months</th><th>Months remaining</th><th>Before admin</th><th>Admin charge</th><th>Refund</th><th>Reason</th></tr></thead><tbody>
+{% for c in cancellations %}<tr><td class="mono">{{ c.cancel_id }}</td><td>{{ c.policy_id }}</td><td>{{ c.cancel_date }}</td><td>{{ c.total_months or '—' }}</td><td>{{ c.months_remaining or '—' }}</td><td>₹{{ c.refund_before_admin }}</td><td>₹{{ c.admin_charge }}</td><td><b>₹{{ c.refund }}</b></td><td>{{ c.reason or 'Eligible' }}</td></tr>{% else %}<tr><td colspan="9" class="empty">No cancellations available.</td></tr>{% endfor %}
+</tbody></table></div><div class="table-foot">{{ cancellations|length }} cancellation records</div></section>{% endblock %}

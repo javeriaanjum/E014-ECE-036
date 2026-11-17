@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}Process claim{% endblock %}{% block page_heading %}Process claim{% endblock %}
+{% block content %}<div class="page-head"><div><h1>Submit a claim</h1><p>The engine checks coverage, exclusions, annual limits and repair-versus-replacement rules.</p></div><a class="btn ghost" href="{{ url_for('claims') }}">← Back to claims</a></div>
+<form class="panel form-panel" method="post"><div class="form-grid">
+<label>Claim ID<input name="claim_id" placeholder="CLM-091" required></label>
+<label>Policy<select name="policy_id" required><option value="">Select policy</option>{% for p in policies %}<option value="{{ p.policy_id }}">{{ p.policy_id }} · {{ p.customer_id }} · {{ p.category }}</option>{% endfor %}</select></label>
+<label>Claim date<input name="claim_date" type="date" value="{{ today }}" required></label>
+<label>Repair estimate (₹)<input name="repair_estimate" type="number" min="0" step="0.01" placeholder="12000" required></label>
+<label>Fault type<select name="fault_type" required><option value="">Select fault</option>{% for f in ['PCB','COMPRESSOR','MOTOR','DISPLAY','POWER_SUPPLY','PHYSICAL_DAMAGE','LIQUID','CONSUMABLE','OTHER'] %}<option>{{ f }}</option>{% endfor %}</select></label>
+</div><div class="form-note">Excluded fault types and all claim limits are enforced by engine.py. A processed claim changes the current in-memory policy state.</div><div class="form-actions"><button class="btn primary">Evaluate claim</button><a class="btn ghost" href="{{ url_for('claims') }}">Cancel</a></div></form>{% endblock %}
